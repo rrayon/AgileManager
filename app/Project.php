@@ -18,6 +18,11 @@ class Project extends Model
 
     public function sprints()
     {
-        return $this->hasMany(Sprint::class);
+        return $this->hasMany(Sprint::class)->orderBy('created_at', 'desc');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

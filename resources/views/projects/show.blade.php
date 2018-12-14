@@ -25,7 +25,7 @@
                                 <li><a href="{{ route('sprints.index', $project->id) }}">Sprints</a></li>
                                 <li><a href="{{ route('contributors.index', $project->id) }}">Contributers</a></li>
                                 <li><a href="{{ route('stories.index', $project->id) }}">Story</a></li>
-                                <li><a href="#">Backlog</a></li>
+                                <li><a href="{{ route('backlogs.index', $project->id) }}">Backlog</a></li>
                             </ul>
                         </div>
                     </div>

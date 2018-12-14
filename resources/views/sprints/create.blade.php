@@ -23,15 +23,13 @@
                 <div class="panel-body">
                     <input type="hidden" name="project_id" value="{{ $project->id }}">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="name">{{__('web.name')}}</label>
+                        <label class="col-sm-3 control-label" for="stories">Stories</label>
                         <div class="col-sm-9">
-                            <input type="text" placeholder="{{__('web.name')}}" id="name" name="name" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="weight">Weight</label>
-                        <div class="col-sm-9">
-                            <input type="number" min="1" max="10" placeholder="Weight" id="weight" name="weight" class="form-control" required>
+                            <select class="demo-select2" multiple name="stories[]" required>
+                                @foreach ($project->stories as $key => $story)
+                                    <option value="{{ $story->id }}">{{ $story->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">

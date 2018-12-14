@@ -10,4 +10,9 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function story()
+    {
+        return $this->belongsTo(Story::class);
+    }
 }

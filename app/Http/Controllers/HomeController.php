@@ -63,4 +63,9 @@ class HomeController extends Controller
     {
         return view('assigned_projects');
     }
+
+    public function assigned_tasks(Request $request)
+    {
+        return view('assigned_tasks');
+    }
 }

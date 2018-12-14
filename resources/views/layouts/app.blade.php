@@ -58,6 +58,9 @@
     <!--Spectrum Stylesheet [ REQUIRED ]-->
     <link href="{{ asset('css/spectrum.css')}}" rel="stylesheet">
 
+    <!--Morris.js [ OPTIONAL ]-->
+    <link href="{{ asset('plugins/morris-js/morris.min.css') }}" rel="stylesheet">
+
     <!--Custom Stylesheet [ REQUIRED ]-->
     <link href="{{ asset('css/custom.css')}}" rel="stylesheet">
 
@@ -117,6 +120,9 @@
 
     <!--Spartan Image JavaScript [ REQUIRED ]-->
     <script src="{{ asset('js/spartan-multi-image-picker-min.js') }}"></script>
+
+    <script src="{{ asset('plugins/morris-js/morris.min.js') }}"></script>
+    <script src="{{ asset('plugins/morris-js/raphael-js/raphael.min.js') }}"></script>
 
     <!--Custom JavaScript [ REQUIRED ]-->
     <script src="{{ asset('js/custom.js')}}"></script>

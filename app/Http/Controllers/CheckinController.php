@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Contributor;
-use App\Project;
-use App\User;
-use Hash;
-use App\Backlog;
+use App\Checkin;
+use App\Sprint;
 
-class ContributorController extends Controller
+class CheckinController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +15,8 @@ class ContributorController extends Controller
      */
     public function index($id)
     {
-        $project = Project::find($id);
-        return view('contributers.index', compact('project'));
+        $sprint = Sprint::find($id);
+        return view('checkins.index', compact('sprint'));
     }
 
     /**
@@ -27,9 +24,10 @@ class ContributorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $sprint = Sprint::find($id);
+        return view('checkins.create', compact('sprint'));
     }
 
     /**
@@ -40,27 +38,7 @@ class ContributorController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-        if($user == null){
-            $user = new User;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make('123456');
-            $user->save();
-        }
-
-        $contributor = new Contributor;
-        $contributor->project_id = $request->project_id;
-        $contributor->user_id = $user->id;
-        $contributor->role = $request->role;
-        $contributor->save();
-
-        $backlog = new Backlog;
-        $backlog->project_id = $request->project_id;
-        $backlog->log = $request->role.' added';
-        $backlog->save();
-
-        return back();
+        //
     }
 
     /**

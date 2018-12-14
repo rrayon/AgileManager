@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Contributor;
-use App\Project;
-use App\User;
-use Hash;
-use App\Backlog;
+use App\Point;
+use App\Checkin;
+use App\Sprint;
 
-class ContributorController extends Controller
+class PointController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +16,8 @@ class ContributorController extends Controller
      */
     public function index($id)
     {
-        $project = Project::find($id);
-        return view('contributers.index', compact('project'));
+        $checkin = Checkin::find($id);
+        return view('points.index', compact('checkin'));
     }
 
     /**
@@ -40,27 +38,23 @@ class ContributorController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-        if($user == null){
-            $user = new User;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make('123456');
-            $user->save();
+        $checkin = new Checkin;
+        $checkin->sprint_id = $request->sprint_id;
+        $checkin->name = $request->name;
+        $checkin->save();
+
+        foreach (Sprint::find($request->sprint_id)->project->contributors as $key => $contributor) {
+            $point = new Point;
+            $point->checkin_id = $checkin->id;
+            $point->contributor_id = $contributor->id;
+            $point->a = $request['a_'.$contributor->id];
+            $point->b = $request['b_'.$contributor->id];
+            $point->c = $request['c_'.$contributor->id];
+            $point->d = $request['d_'.$contributor->id];
+            $point->save();
         }
 
-        $contributor = new Contributor;
-        $contributor->project_id = $request->project_id;
-        $contributor->user_id = $user->id;
-        $contributor->role = $request->role;
-        $contributor->save();
-
-        $backlog = new Backlog;
-        $backlog->project_id = $request->project_id;
-        $backlog->log = $request->role.' added';
-        $backlog->save();
-
-        return back();
+        return redirect()->route('checkins.index', $request->sprint_id);
     }
 
     /**

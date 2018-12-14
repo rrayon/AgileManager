@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Story;
 use App\Project;
+use App\Backlog;
 
 class StoryController extends Controller
 {
@@ -45,6 +46,11 @@ class StoryController extends Controller
         $story->start_date = strtotime($request->start_date);
         $story->end_date = strtotime($request->end_date);
         $story->save();
+
+        $backlog = new Backlog;
+        $backlog->project_id = $request->project_id;
+        $backlog->log = $story->name.' (Story) created';
+        $backlog->save();
 
         return redirect()->route('stories.index', $request->project_id);
     }

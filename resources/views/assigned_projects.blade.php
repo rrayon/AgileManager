@@ -12,8 +12,8 @@
                 <!--Panel heading-->
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <a href="{{ route('projects.show', $project->id) }}"><h3 class="panel-title">{{ $project->name }}</h3></a>
+                        <div class="col-sm-12">
+                            <a href="{{ route('projects.show', $project->id) }}"><h3 class="panel-title">{{ $project->name }} ({{ date('d.m.Y', $project->start_date) }} - {{ date('d.m.Y', $project->start_date) }})</h3></a>
                         </div>
                         <div class="col-sm-6 text-right" style="margin-top:5px;">
                             {{-- <a href="{{route('projects.edit', $project->id)}}" class="btn btn-mint btn-icon"><i class="demo-psi-pen-5 icon-lg"></i></a>
@@ -30,17 +30,6 @@
                             <?php echo $project->description; ?>
                         </div>
                     <div class="nano-pane"><div class="nano-slider" style="height: 20px; transform: translate(0px, 1.32453px);"></div></div></div>
-                </div>
-
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            Start Date: {{ date('d-m-Y', $project->start_date) }}
-                        </div>
-                        <div class="col-sm-6">
-                            End Date: {{ date('d-m-Y', $project->end_date) }}
-                        </div>
-                    </div>
                 </div>
             </div>
 

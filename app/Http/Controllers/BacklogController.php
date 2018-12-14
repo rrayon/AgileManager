@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Contributor;
-use App\Project;
-use App\User;
-use Hash;
 use App\Backlog;
 
-class ContributorController extends Controller
+class BacklogController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +14,8 @@ class ContributorController extends Controller
      */
     public function index($id)
     {
-        $project = Project::find($id);
-        return view('contributers.index', compact('project'));
+        $backlogs = Backlog::where('project_id', $id)->orderBy('created_at', 'desc')->get();
+        return view('backlogs.index', compact('backlogs'));
     }
 
     /**
@@ -40,27 +36,7 @@ class ContributorController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-        if($user == null){
-            $user = new User;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make('123456');
-            $user->save();
-        }
-
-        $contributor = new Contributor;
-        $contributor->project_id = $request->project_id;
-        $contributor->user_id = $user->id;
-        $contributor->role = $request->role;
-        $contributor->save();
-
-        $backlog = new Backlog;
-        $backlog->project_id = $request->project_id;
-        $backlog->log = $request->role.' added';
-        $backlog->save();
-
-        return back();
+        //
     }
 
     /**

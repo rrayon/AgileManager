@@ -15,4 +15,9 @@ class Contributor extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function points()
+    {
+        return $this->hasMany(Point::class);
+    }
 }

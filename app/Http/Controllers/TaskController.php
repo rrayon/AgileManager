@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Story;
+use App\Backlog;
 
 class TaskController extends Controller
 {
@@ -45,7 +46,13 @@ class TaskController extends Controller
         $task->start_date = strtotime($request->start_date);
         $task->end_date = strtotime($request->end_date);
         $task->user_id = $request->user_id;
+        $task->time = strtotime(date('d-m-Y'));
         $task->save();
+
+        $backlog = new Backlog;
+        $backlog->project_id = Story::find($request->story_id)->project_id;
+        $backlog->log = $task->name.' (Task) created';
+        $backlog->save();
 
         return redirect()->route('stories.index', Story::find($request->story_id)->project->id);
     }
@@ -93,5 +100,50 @@ class TaskController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function done($id)
+    {
+        $task = Task::find($id);
+        $task->status = 'Done';
+        $task->time = strtotime(date('d-m-Y'));
+        $task->save();
+
+        $backlog = new Backlog;
+        $backlog->project_id = $task->story->project_id;
+        $backlog->log = $task->name.' (Task) status changed to Done';
+        $backlog->save();
+
+        return back();
+    }
+
+    public function undo($id)
+    {
+        $task = Task::find($id);
+        $task->status = 'Pending';
+        $task->time = strtotime(date('d-m-Y'));
+        $task->save();
+
+        $backlog = new Backlog;
+        $backlog->project_id = $task->story->project_id;
+        $backlog->log = $task->name.' (Task) status changed to Pending';
+        $backlog->save();
+
+        return back();
+    }
+
+    public function doing($id)
+    {
+        $task = Task::find($id);
+        $task->status = 'Doing';
+        $task->time = strtotime(date('d-m-Y'));
+        $task->save();
+
+        $backlog = new Backlog;
+        $backlog->project_id = $task->story->project_id;
+        $backlog->log = $task->name.' (Task) status changed to Doing';
+        $backlog->save();
+
+        return back();
     }
 }

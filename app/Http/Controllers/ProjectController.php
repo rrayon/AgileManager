@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
+use App\Contributor;
 use Auth;
+use App\Backlog;
 
 class ProjectController extends Controller
 {
@@ -43,6 +45,23 @@ class ProjectController extends Controller
         $project->start_date = strtotime($request->start_date);
         $project->end_date = strtotime($request->end_date);
         $project->save();
+
+        $backlog = new Backlog;
+        $backlog->project_id = $project->id;
+        $backlog->log = $project->name.' (Project) created';
+        $backlog->save();
+
+
+        $contributor = new Contributor;
+        $contributor->project_id = $project->id;
+        $contributor->user_id = Auth::user()->id;
+        $contributor->role = 'Project Manager';
+        $contributor->save();
+
+        $backlog = new Backlog;
+        $backlog->project_id = $project->id;
+        $backlog->log = 'Project Manager added';
+        $backlog->save();
 
         return redirect()->route('projects.index');
     }
@@ -87,6 +106,11 @@ class ProjectController extends Controller
         $project->start_date = strtotime($request->start_date);
         $project->end_date = strtotime($request->end_date);
         $project->save();
+
+        $backlog = new Backlog;
+        $backlog->project_id = $project->id;
+        $backlog->log = 'Project updated';
+        $backlog->save();
 
         return redirect()->route('projects.index');
     }

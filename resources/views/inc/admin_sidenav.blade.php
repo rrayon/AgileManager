@@ -130,6 +130,13 @@
                             </a>
                         </li>
 
+                        <li class="{{ areActiveRoutes(['home.tasks'])}}">
+                            <a class="nav-link" href="{{route('home.tasks')}}">
+                                <i class="fa fa-briefcase"></i>
+                                <span class="menu-title">Assigned Task</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
